@@ -10,6 +10,11 @@ I added the following lines after the backward pass but before the optimizer ste
 torch.nn.utils.clip_grad_norm_(generator.parameters(), max_norm=1.0)
 torch.nn.utils.clip_grad_norm_(discriminator.parameters(), max_norm=1.0)
 
+I changed from Adam to AdamW for generator and discrimator:
+
+g_optimizer = torch.optim.AdamW(generator.parameters(), lr=lr)
+d_optimizer = torch.optim.AdamW(discriminator.parameters(), lr=lr)
+
 
 2. In your own words, how does the Discriminator improve its ability to detect fakes?
 
@@ -19,4 +24,4 @@ The discriminator improves by detecting real images from fake ones, while the ge
 
 3. Share a copy of the output image from the last step in the notebook (can be an upload to the ISVC Portal, or a link to the file in AWS Object Store).
 
-Image output and notebook used to train the srgan are here: https://github.com/kkasravi/w251-homework-10
+Image output capture is here: https://github.com/kkasravi/w251-homework-10

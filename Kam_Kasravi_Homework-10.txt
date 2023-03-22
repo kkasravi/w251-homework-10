@@ -1,0 +1,22 @@
+1. What changes did you make to the notebook[s]? Did your changes result in lower losses?
+
+I replaced the scheduler for both the generator and discriminator with the following lines:
+
+g_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(g_optimizer, T_max=lr_step, eta_min=lr*0.1)
+d_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(d_optimizer, T_max=lr_step, eta_min=lr*0.1)
+
+I added the following lines after the backward pass but before the optimizer step for both the generator and discriminator:
+
+torch.nn.utils.clip_grad_norm_(generator.parameters(), max_norm=1.0)
+torch.nn.utils.clip_grad_norm_(discriminator.parameters(), max_norm=1.0)
+
+
+2. In your own words, how does the Discriminator improve its ability to detect fakes?
+
+The discriminator is fed images (typically from the generator) and learns to classify them as real. 
+During each pass it updates its weights to improve its ability to detect real iamges. These weights are updated to minimize error in falsely detecting real images.
+The discriminator improves by detecting real images from fake ones, while the generator improves by generating better images. 
+
+3. Share a copy of the output image from the last step in the notebook (can be an upload to the ISVC Portal, or a link to the file in AWS Object Store).
+
+Image output is here: https://github.com/kkasravi/w251-homework-10
